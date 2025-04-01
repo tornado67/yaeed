@@ -48,12 +48,11 @@ python3 yaeed.py -e ~/myproject/firmware.elf -t "Backtrace: 0x400d999f:0x3ffcfeb
 ```
 
 ## Options
-usage: yaeed.py [-h] [-e ELF] [-s TRACEFILE] [-t TRACE] [--addr2line ADDR2LINE] [--verbose]
 
-Decode ESP32/ESP8266 stack traces.
-
-options:
 ```
+  usage: 
+  
+  yaeed.py [-h] [-e ELF] [-s TRACEFILE] [-t TRACE] [--addr2line ADDR2LINE] [--verbose]
   -h, --help            Show this help message and exit
   -e, --elf ELF         Path to the ELF file from the sketch compilation
   -s, --tracefile TRACEFILE
