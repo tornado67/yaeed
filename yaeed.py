@@ -149,26 +149,30 @@ def decode_addresses(elf_path: str, addresses: List[str], addr2line_path: str, v
 
 def main():
     parser = argparse.ArgumentParser(description="Decode ESP32/ESP8266 stack traces.")
-    parser.add_argument("elf_file", help="Path to the ELF file from the sketch compilation.")
-    parser.add_argument("stacktrace_file", help="Path to the file containing the stack trace.")
+    parser.add_argument("-e","--elf", help="Path to the ELF file from the sketch compilation.")
+    parser.add_argument("-s","--tracefile", help="Path to the file containing the stack trace.")
+    parser.add_argument("-t","--trace", help="Stack trace content.")
     parser.add_argument("--addr2line", default="xtensa-esp32-elf-addr2line",
                         help="Path to addr2line executable (default: xtensa-esp32-elf-addr2line in PATH).")
     parser.add_argument("--verbose", action="store_true", help="Print verbose debugging output.")
     
     args = parser.parse_args()
 
-    if not os.path.isfile(args.elf_file):
-        print(f"Error: ELF file '{args.elf_file}' does not exist.", file=sys.stderr)
+    if not os.path.isfile(args.elf):
+        print(f"Error: ELF file '{args.elf}' does not exist.", file=sys.stderr)
         sys.exit(1)
-    if not os.path.isfile(args.stacktrace_file):
-        print(f"Error: Stacktrace file '{args.stacktrace_file}' does not exist.", file=sys.stderr)
-        sys.exit(1)
+    if args.tracefile:
+        if not os.path.isfile(args.tracefile):
+            print(f"Error: Stacktrace file '{args.tracefile}' does not exist.", file=sys.stderr)
+            sys.exit(1)
     if not os.path.isfile(args.addr2line) and not shutil.which(args.addr2line):
         print(f"Error: addr2line executable '{args.addr2line}' not found.", file=sys.stderr)
         sys.exit(1)
-
-    with open(args.stacktrace_file, "r") as f:
-        stacktrace = f.read()
+    if args.tracefile:
+        with open(args.tracefile, "r") as f:
+            stacktrace = f.read()
+    elif args.trace:
+        stacktrace = args.trace
 
     exception = parse_exception(stacktrace)
     if exception:
@@ -189,7 +193,7 @@ def main():
         print("Error: No valid instruction addresses found in stack trace.", file=sys.stderr)
         sys.exit(1)
 
-    decoded_lines = decode_addresses(args.elf_file, addresses, args.addr2line, args.verbose)
+    decoded_lines = decode_addresses(args.elf, addresses, args.addr2line, args.verbose)
     if decoded_lines:
         print("\nDecoded Stack Trace:")
         for address, line in decoded_lines:
