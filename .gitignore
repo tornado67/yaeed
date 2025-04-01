@@ -1,3 +1,8 @@
+# project specific files
+s.txt
+trace.txt
+trc.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
