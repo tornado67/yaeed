@@ -35,10 +35,14 @@ Run the script with an ELF file and either a stack trace file or raw stack trace
 
 **Decode a stack trace from a file:**
 
+```
 echo "Backtrace: 0x400d999f:0x3ffcfeb0 0x400dc82e:0x3ffcff00 0x4010064e:0x3ffcff70" > stacktrace.txt
+
 python3 yaeed.py -e ~/myproject/.pio/build/esp32dev/firmware.elf -s stacktrace.txt
+```
 
 **Decode raw stack trace** 
+
 ```python3 yaeed.py -e ~/myproject/firmware.elf -t "Backtrace: 0x400d999f:0x3ffcfeb0 0x400dc82e:0x3ffcff00"```
 
 ## Options
