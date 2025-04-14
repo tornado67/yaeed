@@ -44,7 +44,7 @@ python3 yaeed.py -e ~/myproject/.pio/build/esp32dev/firmware.elf -s stacktrace.t
 **Decode raw stack trace** 
 
 ```
-python3 yaeed.py -e ~/myproject/firmware.elf -t "Backtrace: 0x400d999f:0x3ffcfeb0 0x400dc82e:0x3ffcff00"
+python3 yaeed.py -e ~/myproject/.pio/build/esp32dev/firmware.elf -t "Backtrace: 0x400d999f:0x3ffcfeb0 0x400dc82e:0x3ffcff00"
 ```
 
 ## Options
